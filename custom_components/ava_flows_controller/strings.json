@@ -37,7 +37,7 @@
         "data_description": {
           "host": "If the Brain's address changes, it's found again and updated automatically.",
           "port": "The AVA OS port. Default is 3000.",
-          "include_hidden": "Hidden flows are ones AVA keeps out of its own menus, usually internal building blocks.",
+          "include_hidden": "Off by default. Hidden flows are ones AVA keeps out of its own menus, usually internal building blocks.",
           "include_disabled": "Disabled flows are switched off in AVA but still work when pressed.",
           "clean_poweroff_names": "Renames AVA's auto-named power-off flows, like \"XBOX (2) (2)\", after the flow they turn off: \"XBOX – Power Off\". Names you set in AVA are kept.",
           "show_sidebar_panel": "Adds an AVA Flows page to the sidebar where you can run, rename and copy flows, and export the list."

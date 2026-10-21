@@ -96,9 +96,9 @@ def get_unchecked(options: dict[str, Any]) -> set[str]:
 
 
 def passes_filters(options: dict[str, Any], recipe: dict[str, Any] | None) -> bool:
-    """Apply the 'include hidden' and 'include disabled' settings."""
+    """Apply the 'include hidden' (off by default) and 'include disabled' settings."""
     recipe = recipe or {}
-    if recipe.get("isHiddenRecipe") and not options.get(CONF_INCLUDE_HIDDEN, True):
+    if recipe.get("isHiddenRecipe") and not options.get(CONF_INCLUDE_HIDDEN, False):
         return False
     if recipe.get("enabled") is False and not options.get(CONF_INCLUDE_DISABLED, True):
         return False

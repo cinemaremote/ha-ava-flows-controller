@@ -242,7 +242,7 @@ class AvaOsOptionsFlow(OptionsFlow):
                     ),
                     vol.Required(
                         CONF_INCLUDE_HIDDEN,
-                        default=opts.get(CONF_INCLUDE_HIDDEN, True),
+                        default=opts.get(CONF_INCLUDE_HIDDEN, False),
                     ): bool,
                     vol.Required(
                         CONF_INCLUDE_DISABLED,
@@ -367,9 +367,9 @@ def _flow_options(
         if recipe.get("type") == "poweroff" and "power off" not in label.lower():
             label += " (power off)"
         if recipe.get("isHiddenRecipe"):
-            label += " (hidden in AVA)"
-        elif recipe.get("enabled") is False:
-            label += " (disabled in AVA)"
+            label += " \u00b7 Hidden in AVA"
+        if recipe.get("enabled") is False:
+            label += " \u00b7 Disabled in AVA"
         labels.append((key, label))
     counts: dict[str, int] = {}
     for _, label in labels:

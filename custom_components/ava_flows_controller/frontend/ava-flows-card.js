@@ -42,6 +42,20 @@ const STYLE = `
   .power .run ha-icon { color: var(--warning-color, #ff9800); }
   .text { display: flex; flex-direction: column; min-width: 0; }
   .name { font-size: 15px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .name-row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; min-width: 0; }
+  .badge {
+    display: inline-flex; align-items: center; gap: 4px; padding: 1px 8px;
+    border-radius: 10px; font-size: 11px; font-weight: 500; line-height: 16px;
+    white-space: nowrap; --mdc-icon-size: 12px;
+  }
+  .badge.disabled {
+    color: var(--warning-color, #ff9800); border: 1px solid var(--warning-color, #ff9800);
+    background: rgba(255, 152, 0, 0.12);
+  }
+  .badge.hidden {
+    color: var(--secondary-text-color); border: 1px solid var(--divider-color);
+    background: var(--secondary-background-color);
+  }
   .sub {
     font-size: 12px; color: var(--secondary-text-color);
     white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
@@ -195,6 +209,8 @@ class AvaFlowsCard extends HTMLElement {
         name: a.custom_name || a.default_name || a.friendly_name || state.entity_id,
         defaultName: a.default_name || "",
         custom: Boolean(a.custom_name),
+        hidden: a.hidden_in_ava === true,
+        disabled: a.enabled_in_ava === false,
         ava: a.ava_name || "",
         power,
         url: a.run_url || "",
@@ -250,7 +266,11 @@ class AvaFlowsCard extends HTMLElement {
           title="Run ${esc(f.name)}">
           <ha-icon icon="${f.power ? "mdi:power" : "mdi:play-circle-outline"}"></ha-icon>
           <span class="text">
-            <span class="name">${esc(f.name)}</span>
+            <span class="name-row">
+              <span class="name">${esc(f.name)}</span>
+              ${f.hidden ? `<span class="badge hidden"><ha-icon icon="mdi:eye-off-outline"></ha-icon>Hidden in AVA</span>` : ""}
+              ${f.disabled ? `<span class="badge disabled"><ha-icon icon="mdi:cancel"></ha-icon>Disabled in AVA</span>` : ""}
+            </span>
             ${f.custom ? `<span class="sub">AVA: ${esc(f.ava)}</span>` : ""}
           </span>
         </button>
