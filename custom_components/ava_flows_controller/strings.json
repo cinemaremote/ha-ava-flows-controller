@@ -1,0 +1,95 @@
+{
+  "config": {
+    "flow_title": "{name}",
+    "step": {
+      "user": {
+        "title": "AVA Flows Controller (Unofficial)",
+        "description": "Enter the IP address of your AVA OS Brain.",
+        "data": { "host": "Host", "port": "Port" }
+      },
+      "zeroconf_confirm": {
+        "title": "AVA OS discovered",
+        "description": "Set up {name} at {host}?"
+      }
+    },
+    "error": {
+      "cannot_connect": "Could not reach AVA OS at that address."
+    },
+    "abort": {
+      "already_configured": "This AVA OS Brain is already set up.",
+      "cannot_connect": "Could not reach AVA OS."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "AVA Flows Controller options",
+        "description": "Connection and which kinds of flows to offer. You'll pick individual flows on the next page.",
+        "data": {
+          "host": "Host (IP address)",
+          "port": "Port",
+          "include_hidden": "Include hidden flows",
+          "include_disabled": "Include disabled flows",
+          "add_new_flows": "Automatically add flows created later in AVA OS",
+          "clean_poweroff_names": "Clean up power-off flow names",
+          "show_sidebar_panel": "Show AVA Flows in the sidebar"
+        },
+        "data_description": {
+          "host": "If the Brain's address changes, it's found again and updated automatically.",
+          "port": "The AVA OS port. Default is 3000.",
+          "include_hidden": "Hidden flows are ones AVA keeps out of its own menus, usually internal building blocks.",
+          "include_disabled": "Disabled flows are switched off in AVA but still work when pressed.",
+          "clean_poweroff_names": "Renames AVA's auto-named power-off flows, like \"XBOX (2) (2)\", after the flow they turn off: \"XBOX – Power Off\". Names you set in AVA are kept.",
+          "show_sidebar_panel": "Adds an AVA Flows page to the sidebar where you can run, rename and copy flows, and export the list."
+        }
+      },
+      "flows": {
+        "title": "Choose flows",
+        "description": "Showing {shown} of {total} flows. Checked flows become buttons.",
+        "data": {
+          "flows": "Flows to show as buttons"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Could not reach AVA OS at that address and port.",
+      "cannot_load_flows": "Could not load the flow list from AVA OS."
+    }
+  },
+  "issues": {
+    "brain_unreachable": {
+      "title": "{name} can't be found",
+      "fix_flow": {
+        "step": {
+          "address": {
+            "title": "Update the address of {name}",
+            "description": "{name} hasn't answered for a while and couldn't be found on the network. If its IP address changed, enter the new one.",
+            "data": { "host": "Host (IP address)", "port": "Port" }
+          }
+        },
+        "error": {
+          "cannot_connect": "Could not reach AVA OS at that address and port.",
+          "wrong_brain": "That address belongs to a different AVA Brain."
+        }
+      }
+    }
+  },
+  "services": {
+    "rename_flow": {
+      "name": "Rename flow",
+      "description": "Sets the name Home Assistant shows for an AVA flow button. Leave the name empty to go back to the default. Nothing is changed on the AVA Brain.",
+      "fields": {
+        "entity_id": { "name": "Flow", "description": "The flow's button." },
+        "name": { "name": "Name", "description": "The new name. Empty uses the default name." }
+      }
+    },
+    "export_flows": {
+      "name": "Export flows",
+      "description": "Builds a text file listing every flow and its run URL.",
+      "fields": {
+        "brain": { "name": "Brain", "description": "Name of one Brain to export. Leave empty for all Brains." },
+        "save_file": { "name": "Save file", "description": "Save the file to the config folder." }
+      }
+    }
+  }
+}

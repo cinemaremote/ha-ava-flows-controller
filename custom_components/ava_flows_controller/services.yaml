@@ -1,0 +1,24 @@
+rename_flow:
+  fields:
+    entity_id:
+      required: true
+      selector:
+        entity:
+          filter:
+            integration: ava_flows_controller
+            domain: button
+    name:
+      required: false
+      selector:
+        text:
+
+export_flows:
+  fields:
+    brain:
+      required: false
+      selector:
+        text:
+    save_file:
+      required: false
+      selector:
+        boolean:

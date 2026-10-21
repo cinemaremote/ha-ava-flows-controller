@@ -1,0 +1,14 @@
+{
+  "domain": "ava_flows_controller",
+  "name": "AVA Flows Controller (Unofficial)",
+  "codeowners": ["@cinemaremote"],
+  "config_flow": true,
+  "dependencies": ["frontend", "http", "panel_custom", "repairs", "zeroconf"],
+  "documentation": "https://github.com/cinemaremote/ha-ava-flows-controller",
+  "integration_type": "hub",
+  "iot_class": "local_polling",
+  "issue_tracker": "https://github.com/cinemaremote/ha-ava-flows-controller/issues",
+  "requirements": [],
+  "version": "0.9.0",
+  "zeroconf": ["_ava._tcp.local."]
+}

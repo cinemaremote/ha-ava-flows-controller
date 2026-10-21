@@ -1,0 +1,23 @@
+﻿# Personal test data - never commit
+recipes.json
+*.pcap
+*.pcapng
+*.etl
+captures/
+testdata/
+secrets.yaml
+.env
+
+# Keys
+*.pem
+*_ed25519
+*_rsa
+
+# Python / editors
+__pycache__/
+*.pyc
+.venv/
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
