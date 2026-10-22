@@ -9,6 +9,6 @@
   "iot_class": "local_polling",
   "issue_tracker": "https://github.com/cinemaremote/ha-ava-flows-controller/issues",
   "requirements": [],
-  "version": "0.9.1",
+  "version": "0.10.0",
   "zeroconf": ["_ava._tcp.local."]
 }

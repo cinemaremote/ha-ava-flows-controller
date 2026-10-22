@@ -6,7 +6,13 @@ from typing import Any
 
 import aiohttp
 
-from .const import DEFAULT_PORT, DEVICEINFO_PORT, PROJECT, REQUEST_TIMEOUT
+from .const import (
+    ACTIVE_TIMEOUT,
+    DEFAULT_PORT,
+    DEVICEINFO_PORT,
+    PROJECT,
+    REQUEST_TIMEOUT,
+)
 
 
 class AvaOsError(Exception):
@@ -75,6 +81,20 @@ class AvaOsClient:
         if not isinstance(data, list):
             raise AvaOsError("Unexpected response from the recipes endpoint")
         return data
+
+    async def get_active_scenarios(self) -> list[str]:
+        """Keys of the activities (scenarios) running right now.
+
+        A launch flow and its power-off flow share one scenarioKey, so this
+        says which activity is on, not which flow ran last.
+        """
+        data = await self._get_url(
+            f"{self.base_url}/v1/projects/{PROJECT}/activescenariokeys",
+            ACTIVE_TIMEOUT,
+        )
+        if not isinstance(data, list):
+            raise AvaOsError("Unexpected response from the active activities endpoint")
+        return [str(key) for key in data if key is not None]
 
     def run_url(self, room_key: Any, recipe_key: str) -> str | None:
         """Full URL that runs a flow with a plain GET."""

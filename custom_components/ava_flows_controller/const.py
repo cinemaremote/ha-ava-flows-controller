@@ -11,6 +11,9 @@ PROJECT = "home"
 ZEROCONF_TYPE = "_ava._tcp.local."
 
 SCAN_INTERVAL = timedelta(minutes=5)
+# How often to check which activity is running (a small, cheap call).
+ACTIVE_SCAN_INTERVAL = timedelta(seconds=10)
+ACTIVE_TIMEOUT = 5
 # While the Brain can't be reached, check (and look for it) this often.
 RETRY_INTERVAL = timedelta(minutes=1)
 # Search the Brain's subnet at most this often.

@@ -13,14 +13,14 @@ from homeassistant.helpers.typing import ConfigType
 
 from .api import AvaOsClient, AvaOsError
 from .const import CONF_SERIAL, DOMAIN
-from .coordinator import AvaOsCoordinator
+from .coordinator import AvaOsActiveCoordinator, AvaOsCoordinator
 from .frontend import async_register_card, async_update_panel
 from .services import async_register_services
 from .util import get_host_port, get_serial
 
 _LOGGER = logging.getLogger(__name__)
 
-PLATFORMS: list[Platform] = [Platform.BUTTON]
+PLATFORMS: list[Platform] = [Platform.BUTTON, Platform.SENSOR]
 
 CONFIG_SCHEMA = cv.config_entry_only_config_schema(DOMAIN)
 
@@ -53,6 +53,10 @@ async def async_setup_entry(hass: HomeAssistant, entry: AvaOsConfigEntry) -> boo
         await coordinator.async_config_entry_first_refresh()
 
     entry.runtime_data = coordinator
+    # Which activity is running changes often, so it's polled on its own, faster.
+    # A failure here doesn't block setup; the sensor just shows unavailable.
+    coordinator.active = AvaOsActiveCoordinator(hass, entry, coordinator.client)
+    await coordinator.active.async_refresh()
     entry.async_on_unload(entry.add_update_listener(_async_options_updated))
     await hass.config_entries.async_forward_entry_setups(entry, PLATFORMS)
     await async_update_panel(hass)

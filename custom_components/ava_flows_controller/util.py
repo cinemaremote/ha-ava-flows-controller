@@ -118,3 +118,33 @@ def is_flow_included(
     if known is not None and key not in known:
         return options.get(CONF_ADD_NEW, True)
     return True
+
+
+def active_activities(
+    recipes: dict[str, dict[str, Any]], active_keys: list[str], clean: bool = True
+) -> list[dict[str, Any]]:
+    """Describe each running activity by the launch flow that starts it.
+
+    AVA OS reports running activities by scenarioKey. A launch flow and its
+    power-off flow share that key, so the launch flow's name is the
+    activity's name. Hidden and disabled flows count too.
+    """
+    names = display_names(recipes, clean)
+    result: list[dict[str, Any]] = []
+    for scenario in active_keys:
+        matches = [
+            (key, recipe)
+            for key, recipe in recipes.items()
+            if str(recipe.get("scenarioKey")) == scenario
+        ]
+        launch = next((m for m in matches if m[1].get("type") != "poweroff"), None)
+        found = launch or (matches[0] if matches else None)
+        result.append(
+            {
+                "scenario_key": scenario,
+                "name": names[launch[0]] if launch else f"Activity #{scenario[-4:]}",
+                "launch_flow_key": launch[0] if launch else None,
+                "room": found[1].get("roomName") if found else None,
+            }
+        )
+    return result
